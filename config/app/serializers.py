@@ -1,6 +1,13 @@
 from rest_framework import serializers
 from django.core.validators import MinValueValidator, MaxValueValidator
-from .models import Car
+from .models import Car, Brand
+
+class BrandSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=255)
+
+    def create(self, validated_data):
+        return Brand.objects.create(**validated_data)
 
 
 class CarSerializer(serializers.Serializer):
